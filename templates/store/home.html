@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-5">
+  <h1 class="text-center mb-4">🛍 Mahsulotlar do‘koni</h1>
+
+  <div class="mb-4 text-center">
+    <h4>Kategoriyalar</h4>
+    {% for category in categories %}
+      <a href="{% url 'store:category_products' category.slug %}" class="btn btn-outline-dark btn-sm m-1">
+        {{ category.name }}
+      </a>
+    {% endfor %}
+  </div>
+
+  <div class="row">
+    {% for product in products %}
+      <div class="col-md-3 mb-4">
+        <div class="card h-100 shadow-sm">
+          {% if product.image %}
+            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+          {% endif %}
+          <div class="card-body text-center">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text">{{ product.price }} so‘m</p>
+            <a href="{% url 'store:product_detail' product.slug %}" class="btn btn-primary">Batafsil</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}
