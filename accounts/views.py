@@ -24,4 +24,20 @@ def register(request:HttpRequest):
 
     return render(request=request, template_name="register.html")
 
-def login(request:HttpRequest)->HttpResponse
+def login(request:HttpRequest)->HttpResponse:
+    if request.method == "POST":
+        email = request.POST.get("email")
+        pasword = request.POST.get("pasword")
+        rol = request.POST.get("rol")
+        try:
+            user = Accounts.objects.get(email=email, pasword=pasword, rol=rol)
+
+            return HttpResponse("bosh sahifaga xush kelibsiz")
+    
+        except Accounts.DoesNotExist:
+        
+            return HttpResponse("xatolik mavjud iltimos malumotlarni togri kiriting !!!")
+    
+    return render(request=request, template_name="login.html")
+    
+
