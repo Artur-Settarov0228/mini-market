@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Mening Savatim</h2>
+
+{% if cart.items.all %}
+<table border="1" cellpadding="10" cellspacing="0">
+    <tr>
+        <th>Mahsulot</th>
+        <th>Soni</th>
+        <th>Action</th>
+    </tr>
+    {% for item in cart.items.all %}
+    <tr>
+        <td>{{ item.product.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>
+            <a href="{% url 'remove_cart_item' item.id %}">O‘chirish</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>Savat bo‘sh.</p>
+{% endif %}
+
+<a href="{% url 'home' %}">Mahsulotlarga qaytish</a>
+{% endblock %}

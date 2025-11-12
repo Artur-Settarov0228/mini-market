@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{ product.name }}</h2>
+
+{% if product.image %}
+<img src="{{ product.image.url }}" alt="{{ product.name }}" style="width:300px; height:auto;">
+{% endif %}
+
+<p>{{ product.description }}</p>
+<p>Price: {{ product.price }} $</p>
+
+<a href="{% url 'add_product_to_cart' product.id %}">Savatga qo‘shish</a>
+{% endblock %}

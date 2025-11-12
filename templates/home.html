@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Mini Market</h1>
+
+<h2>Kategoriyalar</h2>
+<ul>
+    {% for category in categories %}
+    <li><a href="{% url 'category_products' category.id category.slug %}">{{ category.name }}</a></li>
+    {% endfor %}
+</ul>
+
+<h2>Mahsulotlar</h2>
+<div style="display:flex; flex-wrap: wrap;">
+    {% for product in products %}
+    <div style="border:1px solid #ccc; padding:10px; margin:10px; width:200px;">
+        <h3>{{ product.name }}</h3>
+        {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width:100%; height:auto;">
+        {% endif %}
+        <p>{{ product.price }} $</p>
+        <a href="{% url 'product_detail' product.id %}">Ko‘rish</a> |
+        <a href="{% url 'add_product_to_cart' product.id %}">Savatga qo‘shish</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
