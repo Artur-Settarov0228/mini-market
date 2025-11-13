@@ -25,3 +25,6 @@ def add_product(request: HttpRequest) -> HttpResponse:
         success = True
 
     return render(request, "add_product.html", {"success": success})
+
+def dashboard(request:HttpRequest)->HttpResponse:
+    return render(request=request, template_name="seller_dashboard.html")
