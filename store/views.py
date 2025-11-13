@@ -6,16 +6,16 @@ from django.http import HttpRequest, HttpResponse
 def home(request):
     products = Product.objects.all()
     categories = Category.objects.all()
-    return render(request, 'home.html', {'products': products, 'categories': categories})
+    return render(request, 'index.html', {'products': products, 'categories': categories})
 
 def product_detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)
-    return render(request, 'product_detail.html', {'product': product})
+    return render(request, 'index.html', {'product': product})
 
 def category_products(request, category_id, category_slug):
     category = get_object_or_404(Category, id=category_id)
     products = category.products.all()
-    return render(request, 'category_products.html', {'category': category, 'products': products})
+    return render(request, 'index.html', {'category': category, 'products': products})
 
 @login_required
 def add_product_to_cart(request: HttpRequest, product_id: int) -> HttpResponse:
@@ -36,4 +36,3 @@ def remove_cart_item(request: HttpRequest, item_id: int) -> HttpResponse:
     
     
     
-

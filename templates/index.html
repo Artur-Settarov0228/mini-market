@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahsulot Qo'shish - Online Do'kon</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2ecc71;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --gray: #6c757d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), #2980b9);
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 2rem;
+        }
+        
+        .user-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-success {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #27ae60;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid white;
+            color: white;
+        }
+        
+        .btn-outline:hover {
+            background-color: white;
+            color: var(--primary);
+        }
+        
+        /* Main Content */
+        .main-content {
+            margin: 30px 0;
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .page-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .back-btn {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .form-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .form-section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--dark);
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .required::after {
+            content: " *";
+            color: var(--danger);
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .checkbox-group input {
+            width: auto;
+        }
+        
+        .image-upload {
+            border: 2px dashed #ddd;
+            border-radius: 5px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .image-upload:hover {
+            border-color: var(--primary);
+        }
+        
+        .image-upload i {
+            font-size: 3rem;
+            color: #ddd;
+            margin-bottom: 15px;
+        }
+        
+        .image-upload p {
+            color: #777;
+            margin-bottom: 10px;
+        }
+        
+        .image-preview {
+            display: none;
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .preview-image {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .btn-large {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+        }
+        
+        .btn-cancel {
+            background-color: #f8f9fa;
+            color: var(--gray);
+            border: 1px solid #ddd;
+        }
+        
+        .btn-cancel:hover {
+            background-color: #e9ecef;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--secondary);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 1001;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        
+        .notification.error {
+            background-color: var(--danger);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>Online Do'kon</span>
+                </div>
+                <div class="user-actions">
+                    <button class="btn btn-outline">
+                        <i class="fas fa-user"></i> Admin
+                    </button>
+                    <button class="btn btn-outline">
+                        <i class="fas fa-sign-out-alt"></i> Chiqish
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">Yangi mahsulot qo'shish</h1>
+                <a href="#" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Orqaga - Mahsulotlar ro'yxati
+                </a>
+            </div>
+            
+            <div class="form-container">
+                <form id="addProductForm">
+                    <div class="form-section">
+                        <h2 class="section-title">Asosiy ma'lumotlar</h2>
+                        
+                        <div class="form-group">
+                            <label for="productName" class="required">Mahsulot nomi</label>
+                            <input type="text" id="productName" name="name" required placeholder="Masalan: Smartfon Xiaomi Redmi Note 11">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="productSlug" class="required">Slug (URL uchun)</label>
+                            <input type="text" id="productSlug" name="slug" required placeholder="Masalan: xiaomi-redmi-note-11">
+                            <small style="color: #777; font-size: 0.9rem;">Bu maydon avtomatik to'ldiriladi, lekin siz o'zgartirishingiz mumkin</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="productDescription">Mahsulot tavsifi</label>
+                            <textarea id="productDescription" name="description" placeholder="Mahsulotning batafsil tavsifini kiriting..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h2 class="section-title">Kategoriya va narx</h2>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="productCategory" class="required">Kategoriya</label>
+                                <select id="productCategory" name="category" required>
+                                    <option value="">Kategoriyani tanlang</option>
+                                    <option value="electronics">Elektronika</option>
+                                    <option value="clothing">Kiyim-kechak</option>
+                                    <option value="home">Uy uchun</option>
+                                    <option value="food">Oziq-ovqat</option>
+                                    <option value="books">Kitoblar</option>
+                                    <option value="beauty">Go'zallik</option>
+                                    <option value="sports">Sport</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="productPrice" class="required">Narx (so'm)</label>
+                                <input type="number" id="productPrice" name="price" min="0" step="0.01" required placeholder="Masalan: 2499000">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h2 class="section-title">Rasm</h2>
+                        
+                        <div class="form-group">
+                            <label for="productImage">Mahsulot rasmi</label>
+                            <div class="image-upload" id="imageUpload">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Rasm yuklash uchun bosing yoki sudrab keling</p>
+                                <span>PNG, JPG, WEBP - maksimal 5MB</span>
+                                <input type="file" id="productImage" name="image" accept="image/*" style="display: none;">
+                            </div>
+                            <div class="image-preview" id="imagePreview">
+                                <img src="" alt="Rasm ko'rib chiqish" class="preview-image">
+                                <button type="button" class="btn btn-cancel" id="removeImage" style="margin-top: 10px;">
+                                    <i class="fas fa-trash"></i> Rasmni o'chirish
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h2 class="section-title">Qo'shimcha sozlamalar</h2>
+                        
+                        <div class="form-group">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="productAvailable" name="available" checked>
+                                <label for="productAvailable">Mahsulot mavjud</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-cancel btn-large" id="cancelBtn">
+                            Bekor qilish
+                        </button>
+                        <button type="submit" class="btn btn-success btn-large">
+                            <i class="fas fa-save"></i> Mahsulotni saqlash
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Online Do'kon</h3>
+                    <p>Eng yaxshi mahsulotlarni eng qulay narxlarda toping. Biz sizga sifatli xizmat va tez yetkazib berishni ta'minlaymiz.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Tez havolalar</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Bosh sahifa</a></li>
+                        <li><a href="#">Mahsulotlar</a></li>
+                        <li><a href="#">Aksiyalar</a></li>
+                        <li><a href="#">Yangi kelganlar</a></li>
+                        <li><a href="#">Biz haqimizda</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Aloqa</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> Toshkent sh., Yunusobod t.</li>
+                        <li><i class="fas fa-phone"></i> +998 90 123 45 67</li>
+                        <li><i class="fas fa-envelope"></i> info@onlinedokon.uz</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 Online Do'kon. Barcha huquqlar himoyalangan.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+
+    <script>
+        // DOM Elements
+        const addProductForm = document.getElementById('addProductForm');
+        const productName = document.getElementById('productName');
+        const productSlug = document.getElementById('productSlug');
+        const productDescription = document.getElementById('productDescription');
+        const productCategory = document.getElementById('productCategory');
+        const productPrice = document.getElementById('productPrice');
+        const productImage = document.getElementById('productImage');
+        const productAvailable = document.getElementById('productAvailable');
+        const imageUpload = document.getElementById('imageUpload');
+        const imagePreview = document.getElementById('imagePreview');
+        const previewImage = document.querySelector('.preview-image');
+        const removeImage = document.getElementById('removeImage');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const notification = document.getElementById('notification');
+
+        // Generate slug from product name
+        productName.addEventListener('input', function() {
+            if (productSlug.value === '') {
+                const slug = productName.value
+                    .toLowerCase()
+                    .replace(/[^\w ]+/g, '')
+                    .replace(/ +/g, '-');
+                productSlug.value = slug;
+            }
+        });
+
+        // Image upload handling
+        imageUpload.addEventListener('click', function() {
+            productImage.click();
+        });
+
+        productImage.addEventListener('change', function(e) {
+            if (e.target.files && e.target.files[0]) {
+                const file = e.target.files[0];
+                
+                // Check file size (max 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    showNotification('Rasm hajmi 5MB dan oshmasligi kerak', true);
+                    return;
+                }
+                
+                // Check file type
+                if (!file.type.match('image.*')) {
+                    showNotification('Faqat rasm fayllari qabul qilinadi', true);
+                    return;
+                }
+                
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                    imageUpload.style.display = 'none';
+                };
+                
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Remove image
+        removeImage.addEventListener('click', function() {
+            productImage.value = '';
+            imagePreview.style.display = 'none';
+            imageUpload.style.display = 'block';
+        });
+
+        // Drag and drop for image upload
+        imageUpload.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            imageUpload.style.borderColor = var(--primary);
+            imageUpload.style.backgroundColor = 'rgba(52, 152, 219, 0.1)';
+        });
+
+        imageUpload.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            imageUpload.style.borderColor = '#ddd';
+            imageUpload.style.backgroundColor = 'transparent';
+        });
+
+        imageUpload.addEventListener('drop', function(e) {
+            e.preventDefault();
+            imageUpload.style.borderColor = '#ddd';
+            imageUpload.style.backgroundColor = 'transparent';
+            
+            if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                productImage.files = e.dataTransfer.files;
+                const event = new Event('change');
+                productImage.dispatchEvent(event);
+            }
+        });
+
+        // Form submission
+        addProductForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Basic validation
+            if (!productName.value.trim()) {
+                showNotification('Mahsulot nomini kiriting', true);
+                productName.focus();
+                return;
+            }
+            
+            if (!productSlug.value.trim()) {
+                showNotification('Slug ni kiriting', true);
+                productSlug.focus();
+                return;
+            }
+            
+            if (!productCategory.value) {
+                showNotification('Kategoriyani tanlang', true);
+                productCategory.focus();
+                return;
+            }
+            
+            if (!productPrice.value || parseFloat(productPrice.value) <= 0) {
+                showNotification('To\'g\'ri narx kiriting', true);
+                productPrice.focus();
+                return;
+            }
+            
+            // In a real application, you would send the form data to the server here
+            // For demonstration, we'll just show a success message
+            
+            // Collect form data
+            const formData = new FormData();
+            formData.append('name', productName.value);
+            formData.append('slug', productSlug.value);
+            formData.append('description', productDescription.value);
+            formData.append('category', productCategory.value);
+            formData.append('price', productPrice.value);
+            formData.append('available', productAvailable.checked);
+            
+            if (productImage.files[0]) {
+                formData.append('image', productImage.files[0]);
+            }
+            
+            // Simulate API call
+            simulateAPICall(formData)
+                .then(response => {
+                    showNotification('Mahsulot muvaffaqiyatli qo\'shildi!');
+                    
+                    // Reset form
+                    addProductForm.reset();
+                    imagePreview.style.display = 'none';
+                    imageUpload.style.display = 'block';
+                    
+                    // In a real app, you might redirect to the products list
+                    // setTimeout(() => {
+                    //     window.location.href = 'products.html';
+                    // }, 2000);
+                })
+                .catch(error => {
+                    showNotification('Xatolik yuz berdi: ' + error.message, true);
+                });
+        });
+
+        // Cancel button
+        cancelBtn.addEventListener('click', function() {
+            if (confirm('Barcha o\'zgarishlar bekor qilinadi. Rostan ham davom etasizmi?')) {
+                window.location.href = 'products.html'; // In a real app, redirect to products list
+            }
+        });
+
+        // Show notification
+        function showNotification(message, isError = false) {
+            notification.textContent = message;
+            notification.className = 'notification';
+            
+            if (isError) {
+                notification.classList.add('error');
+            }
+            
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 5000);
+        }
+
+        // Simulate API call
+        function simulateAPICall(formData) {
+            return new Promise((resolve, reject) => {
+                // Simulate network delay
+                setTimeout(() => {
+                    // Simulate random success (90% success rate for demo)
+                    if (Math.random() > 0.1) {
+                        resolve({
+                            success: true,
+                            message: 'Mahsulot muvaffaqiyatli qo\'shildi',
+                            productId: Date.now() // Simulate generated ID
+                        });
+                    } else {
+                        reject(new Error('Server xatosi. Iltimos, qaytadan urinib ko\'ring.'));
+                    }
+                }, 1500);
+            });
+        }
+
+        // Demo: Pre-fill form for testing
+        // Remove this in production
+        window.addEventListener('load', function() {
+            // Uncomment the following lines to pre-fill the form for testing
+            /*
+            productName.value = 'Smartfon Xiaomi Redmi Note 11';
+            productSlug.value = 'xiaomi-redmi-note-11';
+            productDescription.value = '128GB xotira, 6GB RAM, 50MP asosiy kamera, 5000mAh batareya';
+            productCategory.value = 'electronics';
+            productPrice.value = '2499000';
+            */
+        });
+    </script>
+</body>
+</html>

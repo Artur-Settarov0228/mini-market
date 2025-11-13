@@ -70,3 +70,11 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f'{self.quantity} of {self.product.name} in order {self.order.id}'
+    
+class ProductItem(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    name = models.CharField(max_length=300)
+    description = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.name
